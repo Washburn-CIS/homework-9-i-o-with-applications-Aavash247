@@ -9,6 +9,7 @@ public class GradeBook {
         Scanner fileInput = new Scanner(new File("grades.txt"));
         int numStudents = Integer.parseInt(fileInput.nextLine());
         students = new Student[numStudents];
+        
         // TODO: initialize students from contents of grades.txt file
         while(fileInput.hasNext()){
             for(int i = 0; i < numStudents; i++){
@@ -16,7 +17,7 @@ public class GradeBook {
                 students[i] = new Student();
                 students[i].setLastName(temp[0]);
                 students[i].setFirstName(temp[1]);
-                students[i].setGrade(Integer.parseInt(temp[2]));
+                students[i].setGrade(Double.parseDouble(temp[2]));
             }
         }
 
@@ -25,7 +26,8 @@ public class GradeBook {
             System.out.println("\nPlease make a selection:\n");
             System.out.println("1) List Class Grades");
             System.out.println("2) Update Grade");
-            System.out.println("3) Exit");
+            System.out.println("3) Save grades");
+            System.out.println("4) Exit");
             System.out.print("\nPlease choose an option: ");
             String choice = input.nextLine();
             System.out.println();
@@ -44,19 +46,33 @@ public class GradeBook {
                     String lname = input.nextLine();
                     
                     for(Student student: students) {
-                        if(student.getFirstName().equals(fname) &&
-                           student.getLastName().equals(lname)) {
+                        if(student.getFirstName().equals(fname) && student.getLastName().equals(lname)) {
                            System.out.println("Enter Grade: ");
                            student.setGrade(Double.parseDouble(input.nextLine()));
                            System.out.println("Grade updated");
                            continue;
                         }
+                        else{
+                            System.out.println("Student not found");
+                           
+                        }
                     }
-                    System.out.println("Student not found");
                     break;
+                    
                 case "3":
                     //Challenge: write code to save the grades to grades.txt
- 
+                    PrintWriter fout = new PrintWriter(new File("grades.txt"));
+                    fout.println(students.length);
+                    for(int i = 0; i < students.length; i++){
+                       fout.printf("%s, %s, %f%n",students[i].getLastName(),
+                                                  students[i].getFirstName(),
+                                                  students[i].getGrade());
+                    }
+                    fout.close();
+                    System.out.print("Grades saved!");
+                    continue;
+                
+                case "4":
                     System.out.println("Goodbye!");
                     return;
             }
