@@ -3,7 +3,7 @@ import java.io.*;
 public class GradeBook {
     private static Student[] students;
 
-    public static void main(String[] args) 
+    public static void main(String[] args)
         throws FileNotFoundException{
         Scanner input = new Scanner(System.in);
         Scanner fileInput = new Scanner(new File("grades.txt"));
@@ -44,18 +44,18 @@ public class GradeBook {
                     String fname = input.nextLine();
                     System.out.println("Enter Last Name: ");
                     String lname = input.nextLine();
-                    
+                    boolean found = false;
                     for(Student student: students) {
-                        if(student.getFirstName().equals(fname) && student.getLastName().equals(lname)) {
+                        if(student.getFirstName().toLowerCase().equals(fname.toLowerCase()) && student.getLastName().toLowerCase().equals(lname.toLowerCase())) {
                            System.out.println("Enter Grade: ");
                            student.setGrade(Double.parseDouble(input.nextLine()));
                            System.out.println("Grade updated");
-                           continue;
+                           found = true;
+                           break;
                         }
-                        else{
-                            System.out.println("Student not found");
-                           
-                        }
+                    }
+                    if (found != true){
+                        System.out.print("Student not found!");
                     }
                     break;
                     
@@ -64,12 +64,12 @@ public class GradeBook {
                     PrintWriter fout = new PrintWriter(new File("grades.txt"));
                     fout.println(students.length);
                     for(int i = 0; i < students.length; i++){
-                       fout.printf("%s, %s, %f%n",students[i].getLastName(),
+                       fout.printf("%s,%s,%.2f%n",students[i].getLastName(),
                                                   students[i].getFirstName(),
                                                   students[i].getGrade());
                     }
                     fout.close();
-                    System.out.print("Grades saved!");
+                    System.out.println("Grades saved!");
                     continue;
                 
                 case "4":
