@@ -1,0 +1,3 @@
+2
+Turing, Alan, 95.000000
+Lovelace, Ada, 87.000000

@@ -1,15 +1,26 @@
 import java.util.Scanner;
-
+import java.io.*;
 public class GradeBook {
     private static Student[] students;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+        throws FileNotFoundException{
         Scanner input = new Scanner(System.in);
-
+        Scanner fileInput = new Scanner(new File("grades.txt"));
+        int numStudents = Integer.parseInt(fileInput.nextLine());
+        students = new Student[numStudents];
         // TODO: initialize students from contents of grades.txt file
+        while(fileInput.hasNext()){
+            for(int i = 0; i < numStudents; i++){
+                String[] temp = fileInput.nextLine().split(",");
+                students[i] = new Student();
+                students[i].setLastName(temp[0]);
+                students[i].setFirstName(temp[1]);
+                students[i].setGrade(Integer.parseInt(temp[2]));
+            }
+        }
 
         System.out.println("Welcome to the CM111 Grade Book App!");
-
         while(true) {
             System.out.println("\nPlease make a selection:\n");
             System.out.println("1) List Class Grades");
@@ -21,7 +32,7 @@ public class GradeBook {
             switch(choice) {
                 case "1": 
                     for(Student student: students) {
-                        System.out.printf("%s, %s: %f%n", student.getLastName(), 
+                        System.out.printf("%s, %s: %.2f%n", student.getLastName(), 
                                                         student.getFirstName(), 
                                                         student.getGrade());
                     }
@@ -44,10 +55,10 @@ public class GradeBook {
                     System.out.println("Student not found");
                     break;
                 case "3":
-                    // Challenge: write code to save the grades to grades.txt
+                    //Challenge: write code to save the grades to grades.txt
+ 
                     System.out.println("Goodbye!");
                     return;
-
             }
         }
     }
